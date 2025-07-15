@@ -7,6 +7,15 @@ public static class ApplicationConfiguration
 {
     public static IServiceCollection AddApplication(this IServiceCollection services, IConfiguration configuration)
     {
+        return AddMediatR(services);
+    }
+
+    public static IServiceCollection AddMediatR(this IServiceCollection services)
+    {
+        services.AddMediatR(cfg => 
+            cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies())
+        );
+
         return services;
     }
 }

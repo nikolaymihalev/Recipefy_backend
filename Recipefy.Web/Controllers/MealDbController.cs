@@ -8,6 +8,6 @@ public class MealDbController : ApiController
     [HttpPost]
     [Route(nameof(AddNewIngredients))]
     public async Task<ActionResult<int>> AddNewIngredients(
-        [FromQuery] AddNewIngredientsCommand command)
+        [FromQuery] AddNewestIngredientsCommand command)
         => await Send(command);
 }

@@ -8,7 +8,23 @@ public static class WebConfiguration
     {
         services.AddControllers();
         
-        return services
-            .AddEndpointsApiExplorer();
+        return services.AddEndpointsApiExplorer()
+            .AddCustomCors();
+    }
+
+    private static IServiceCollection AddCustomCors(this IServiceCollection services)
+    {
+        services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", policy =>
+            {
+                policy
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
+        
+        return services;
     }
 }
