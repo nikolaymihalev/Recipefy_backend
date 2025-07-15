@@ -6,8 +6,8 @@ namespace Recipefy.Web.Controllers;
 public class MealDbController : ApiController
 {
     [HttpPost]
-    [Route(nameof(AddNewIngredients))]
-    public async Task<ActionResult<int>> AddNewIngredients(
+    [Route(nameof(AddNewestIngredients))]
+    public async Task<ActionResult<int>> AddNewestIngredients(
         [FromQuery] AddNewestIngredientsCommand command)
         => await Send(command);
 }

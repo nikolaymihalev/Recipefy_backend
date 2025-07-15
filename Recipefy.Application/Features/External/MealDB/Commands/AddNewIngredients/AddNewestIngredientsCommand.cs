@@ -1,6 +1,7 @@
 using System.Net.Http.Json;
 using MediatR;
 using Microsoft.Extensions.Configuration;
+using Recipefy.Application.Contracts.Services;
 using Recipefy.Application.Features.External.MealDB.Common;
 
 namespace Recipefy.Application.Features.External.MealDB.Commands.AddNewIngredients;
@@ -11,23 +12,18 @@ public class AddNewestIngredientsCommand : IRequest<int>
 
 public class AddNewestIngredientsCommandHandler : IRequestHandler<AddNewestIngredientsCommand, int>
 {
-    private readonly string _baseUrl;
-    
+    private readonly IMealDbService _mealDbService;
+
     public AddNewestIngredientsCommandHandler(
-        IConfiguration configuration)
+        IMealDbService mealDbService)
     {
-        _baseUrl = configuration.GetSection("TheMealDB:BaseUrl").Value!;
+        _mealDbService = mealDbService;
     }
     
     public async Task<int> Handle(AddNewestIngredientsCommand request, CancellationToken cancellationToken)
     {
-        var query = "list.php?i=list";
+        var ingredients = await _mealDbService.GetAllIngredientsAsync(cancellationToken);
         
-        using var client = new HttpClient();
-        client.BaseAddress = new Uri(_baseUrl);
-        
-        var ingredients = await client.GetFromJsonAsync<GetIngredientsOutputModel>(query, cancellationToken);
-        
-        return ingredients.Meals.Length;
+        return ingredients?.Meals.Length ?? 0;
     }
 }

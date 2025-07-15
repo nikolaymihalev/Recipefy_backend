@@ -17,4 +17,9 @@
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0-preview.6.25358.103" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Contracts\Common\" />
+      <Folder Include="Contracts\Repositories\" />
+    </ItemGroup>
+
 </Project>
