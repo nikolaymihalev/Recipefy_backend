@@ -19,7 +19,7 @@ public static class InfrastructureConfiguration
 
     private static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("DefaultConnection");
+        var connectionString = configuration.GetConnectionString(DatabaseKey);
 
         services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlServer(connectionString));
         
@@ -29,13 +29,24 @@ public static class InfrastructureConfiguration
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.Scan(scan => scan
-            .FromAssemblies(
-                typeof(IScopedService).Assembly,         
-                Assembly.GetExecutingAssembly()          
-            )
+            .FromAssemblies(Assembly.GetExecutingAssembly())        
             .AddClasses(classes => classes.AssignableTo<IScopedService>())
             .AsImplementedInterfaces()
             .WithScopedLifetime()
+        );
+        
+        services.Scan(scan => scan
+            .FromAssemblies(Assembly.GetExecutingAssembly())        
+            .AddClasses(classes => classes.AssignableTo<ITransientService>())
+            .AsImplementedInterfaces()
+            .WithTransientLifetime()
+        );
+        
+        services.Scan(scan => scan
+            .FromAssemblies(Assembly.GetExecutingAssembly())        
+            .AddClasses(classes => classes.AssignableTo<ISingletonService>())
+            .AsImplementedInterfaces()
+            .WithSingletonLifetime()
         );
 
         return services;
