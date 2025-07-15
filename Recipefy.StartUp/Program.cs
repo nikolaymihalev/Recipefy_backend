@@ -5,6 +5,7 @@ using Recipefy.Web;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
+    .AddSwaggerGen()
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration)
     .AddWebComponents();
@@ -18,5 +19,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapControllers();
 
 app.Run();
