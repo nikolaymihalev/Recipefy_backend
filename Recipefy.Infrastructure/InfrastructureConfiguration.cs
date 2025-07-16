@@ -53,7 +53,7 @@ public static class InfrastructureConfiguration
         return services;
     }
 
-    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    private static IServiceCollection AddRepositories(this IServiceCollection services)
     {
         services.Scan(scan => scan
             .FromAssemblies(Assembly.GetExecutingAssembly())        
