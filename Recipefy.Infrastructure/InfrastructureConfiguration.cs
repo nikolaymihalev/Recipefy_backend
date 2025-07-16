@@ -14,6 +14,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         return AddDbContext(services,configuration)
+            .AddRepositories()
             .AddServices();
     }
 
@@ -49,6 +50,18 @@ public static class InfrastructureConfiguration
             .WithSingletonLifetime()
         );
 
+        return services;
+    }
+
+    public static IServiceCollection AddRepositories(this IServiceCollection services)
+    {
+        services.Scan(scan => scan
+            .FromAssemblies(Assembly.GetExecutingAssembly())        
+            .AddClasses(classes => classes.AssignableTo(typeof(IRepository<>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime()
+        );
+        
         return services;
     }
 }
