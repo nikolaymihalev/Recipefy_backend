@@ -21,7 +21,6 @@
     <ItemGroup>
       <Folder Include="Contracts\Repositories\" />
       <Folder Include="Contracts\Services\" />
-      <Folder Include="Features\External\" />
       <Folder Include="Utility\Helpers\" />
     </ItemGroup>
 
