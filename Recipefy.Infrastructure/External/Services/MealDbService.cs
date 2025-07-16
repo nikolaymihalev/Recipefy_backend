@@ -13,7 +13,7 @@ public class MealDbService : IMealDbService
     public MealDbService(
         IConfiguration configuration)
     {
-        _baseUrl = configuration.GetSection("TheMealDB:BaseUrl").Value!;
+        _baseUrl = configuration["TheMealDB:BaseUrl"];
         
         _httpClient = new HttpClient()
         {
@@ -23,7 +23,7 @@ public class MealDbService : IMealDbService
     
     public async Task<GetIngredientsOutputModel?> GetAllIngredientsAsync(CancellationToken cancellationToken = default)
     {
-        var query = "list.php?i=list";
+        var query = "/list.php?i=list";
         
         return await GetAsync<GetIngredientsOutputModel>(query, cancellationToken);
     }

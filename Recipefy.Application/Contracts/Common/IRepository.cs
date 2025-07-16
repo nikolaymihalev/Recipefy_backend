@@ -6,8 +6,9 @@ namespace Recipefy.Application.Contracts.Common;
 public interface IRepository<TEntity> where TEntity : class, IAggregateRoot
 {
     IQueryable<TEntity> GetAll();
-    Task<TEntity?> GetByIdAsync(object id);
-    Task AddAsync(TEntity entity);
+    Task<TEntity?> GetByIdAsync(object id, CancellationToken cancellationToken = default);
+    Task AddAsync(TEntity entity, CancellationToken cancellationToken = default);
+    Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
     Task UpdateAsync(TEntity entity);
     Task RemoveAsync(TEntity entity);
     Task SaveChangesAsync();

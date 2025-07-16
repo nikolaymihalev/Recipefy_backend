@@ -17,10 +17,9 @@ public class DataRepository<TEntity> : IRepository<TEntity> where TEntity : clas
     internal DbSet<TEntity> DbSet() => _dbContext.Set<TEntity>();
     
     public IQueryable<TEntity> GetAll() => this.DbSet().AsNoTracking();
-
-    public async Task<TEntity?> GetByIdAsync(object id) => await this.DbSet().FindAsync(id);
-
-    public async Task AddAsync(TEntity entity) => await this.DbSet().AddAsync(entity);
+    public async Task<TEntity?> GetByIdAsync(object id, CancellationToken cancellationToken = default) => await this.DbSet().FindAsync(id, cancellationToken);
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken = default) => await this.DbSet().AddAsync(entity, cancellationToken);
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default) => await this.DbSet().AddRangeAsync(entities, cancellationToken);
 
     public async Task UpdateAsync(TEntity entity)
     {

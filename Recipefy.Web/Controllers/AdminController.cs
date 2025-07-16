@@ -3,7 +3,7 @@ using Recipefy.Application.Features.External.MealDB.Commands.AddNewIngredients;
 
 namespace Recipefy.Web.Controllers;
 
-public class MealDbController : ApiController
+public class AdminController : ApiController
 {
     [HttpPost]
     [Route(nameof(AddNewestIngredients))]
