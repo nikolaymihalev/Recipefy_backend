@@ -1,27 +1,25 @@
-using System.Net.Http.Json;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Recipefy.Application.Contracts.Repositories;
 using Recipefy.Application.Contracts.Services;
-using Recipefy.Application.Features.External.MealDB.Common;
 using Recipefy.Application.Utility.Helpers;
 using Recipefy.Domain.Constants;
 using Recipefy.Domain.Models.Entities;
 
 namespace Recipefy.Application.Features.External.MealDB.Commands.AddNewIngredients;
 
-public class AddNewestIngredientsCommand : IRequest<int>
+public class SyncWithAllIngredientsCommand : IRequest<int>
 {
 }
 
-public class AddNewestIngredientsCommandHandler : IRequestHandler<AddNewestIngredientsCommand, int>
+public class SyncWithAllIngredientsCommandHandler : IRequestHandler<SyncWithAllIngredientsCommand, int>
 {
     private readonly IMealDbService _mealDbService;
     private readonly IIngredientRepository _ingredientRepository;
 
     private readonly string _baseImageUrl;
 
-    public AddNewestIngredientsCommandHandler(
+    public SyncWithAllIngredientsCommandHandler(
         IMealDbService mealDbService,
         IIngredientRepository ingredientRepository,
         IConfiguration configuration)
@@ -29,10 +27,10 @@ public class AddNewestIngredientsCommandHandler : IRequestHandler<AddNewestIngre
         _mealDbService = mealDbService;
         _ingredientRepository = ingredientRepository;
         
-        _baseImageUrl = configuration["TheMealDB:BaseImageUrl"];
+        _baseImageUrl = configuration["TheMealDB:BaseIngredientImageUrl"];
     }
     
-    public async Task<int> Handle(AddNewestIngredientsCommand request, CancellationToken cancellationToken)
+    public async Task<int> Handle(SyncWithAllIngredientsCommand request, CancellationToken cancellationToken)
     {
         var externalIngredients = await _mealDbService.GetAllIngredientsAsync(cancellationToken);
 
@@ -60,7 +58,7 @@ public class AddNewestIngredientsCommandHandler : IRequestHandler<AddNewestIngre
                 CreatedDate = DateTime.Now,
                 ImageUrl = string.IsNullOrEmpty(x.StrIngredient)
                     ? null
-                    : MealDbHelper.GetImageUrl(_baseImageUrl, x.StrIngredient, ModelConstants.FileExtensions.Png),
+                    : MealDbHelper.GetIngredientImageUrl(_baseImageUrl, x.StrIngredient, ModelConstants.FileExtensions.Png),
                 Type = x.StrIngredient
             })
             .DistinctBy(x => x.ExternalId)

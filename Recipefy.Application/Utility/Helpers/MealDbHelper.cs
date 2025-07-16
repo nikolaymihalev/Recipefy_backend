@@ -2,7 +2,7 @@ namespace Recipefy.Application.Utility.Helpers;
 
 public static class MealDbHelper
 {
-    public static string GetImageUrl(string basePath, string modelName, string extension)
+    public static string GetIngredientImageUrl(string basePath, string modelName, string extension)
     {
         var convertedName = modelName.ToLower().Replace(" ", "_");
         

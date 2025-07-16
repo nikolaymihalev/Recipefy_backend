@@ -6,8 +6,8 @@ namespace Recipefy.Web.Controllers;
 public class AdminController : ApiController
 {
     [HttpPost]
-    [Route(nameof(AddNewestIngredients))]
-    public async Task<ActionResult<int>> AddNewestIngredients(
-        [FromQuery] AddNewestIngredientsCommand command)
+    [Route(nameof(SyncWithAllIngredients))]
+    public async Task<ActionResult<int>> SyncWithAllIngredients(
+        [FromQuery] SyncWithAllIngredientsCommand command)
         => await Send(command);
 }
