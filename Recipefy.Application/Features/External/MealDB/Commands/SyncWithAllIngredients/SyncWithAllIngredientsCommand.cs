@@ -6,7 +6,7 @@ using Recipefy.Application.Utility.Helpers;
 using Recipefy.Domain.Constants;
 using Recipefy.Domain.Models.Entities;
 
-namespace Recipefy.Application.Features.External.MealDB.Commands.AddNewIngredients;
+namespace Recipefy.Application.Features.External.MealDB.Commands.SyncWithAllIngredients;
 
 public class SyncWithAllIngredientsCommand : IRequest<int>
 {

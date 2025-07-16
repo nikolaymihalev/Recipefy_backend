@@ -1,4 +1,4 @@
-namespace Recipefy.Application.Features.External.MealDB.Common;
+namespace Recipefy.Application.Features.External.MealDB.Commands.SyncWithAllIngredients;
 
 public class IngredientDTOModel
 {
