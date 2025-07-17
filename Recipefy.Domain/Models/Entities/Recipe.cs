@@ -22,6 +22,10 @@ public class Recipe : Entity<int>, IAggregateRoot
     public decimal PricePerServing { get; set; }
     public WeightPerServing WeightPerServing { get; set; }
     public CaloricBreakdown? CaloricBreakdown { get; set; }
+    public string? Description { get; set; }
+    public string Instructions { get; set; }
+    public string? DishTypes { get; set; }
+    public string? Diets { get; set; }
     
     public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
     public ICollection<RecipeNutrient> RecipeNutrients { get; set; } = new List<RecipeNutrient>();

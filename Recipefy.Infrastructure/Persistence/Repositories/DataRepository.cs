@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Recipefy.Application.Contracts.Common;
 using Recipefy.Domain.Common;
 
-namespace Recipefy.Infrastructure.Persistence;
+namespace Recipefy.Infrastructure.Persistence.Repositories;
 
 public class DataRepository<TEntity> : IRepository<TEntity> where TEntity : class, IAggregateRoot
 {
