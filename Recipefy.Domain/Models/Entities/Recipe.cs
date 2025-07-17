@@ -1,4 +1,5 @@
 using Recipefy.Domain.Common;
+using Recipefy.Domain.Models.ValueObjects;
 
 namespace Recipefy.Domain.Models.Entities;
 
@@ -19,6 +20,8 @@ public class Recipe : Entity<int>, IAggregateRoot
     public int? HealthScore { get; set; }
     public int Likes { get; set; }
     public decimal PricePerServing { get; set; }
+    public WeightPerServing WeightPerServing { get; set; }
     
     public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
+    public ICollection<RecipeNutrient> RecipeNutrients { get; set; } = new List<RecipeNutrient>();
 }
