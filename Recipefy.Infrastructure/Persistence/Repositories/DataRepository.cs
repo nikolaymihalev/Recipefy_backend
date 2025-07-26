@@ -9,7 +9,7 @@ public class DataRepository<TEntity> : IRepository<TEntity> where TEntity : clas
 {
     private readonly DbContext _dbContext;
 
-    public DataRepository(ApplicationDbContext dbContext)
+    internal DataRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

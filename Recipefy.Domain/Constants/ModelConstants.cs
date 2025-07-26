@@ -13,4 +13,13 @@ public static class ModelConstants
         public const string Doc = ".doc";
         public const string Docx = ".docx";
     }
+
+    public static class Seperators
+    {
+        public const string Comma = ",";
+        public const string CommaWithSpace = ", ";
+        public const string Space = " ";
+        public const string Semicolon = ";";
+        public const string SemicolonWithSpace = "; ";
+    }
 }
