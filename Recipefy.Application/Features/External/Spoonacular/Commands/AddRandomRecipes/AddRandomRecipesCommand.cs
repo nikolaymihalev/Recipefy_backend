@@ -46,9 +46,9 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
             return 0;
         
         var recipesExternalIdsDb = await _recipeRepository.GetAllRecipesExternalIds(cancellationToken);
-        
+
         recipesResponse.Recipes = recipesResponse.Recipes
-            .Where(x=>recipesExternalIdsDb.Contains(x.Id) == false)
+            .Where(x => recipesExternalIdsDb.Contains(x.Id) == false)
             .ToArray();
 
         var recipesToAdd = recipesResponse.Recipes
@@ -113,6 +113,6 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
 
         await _recipeRepository.AddRangeAsync(recipesToAdd, cancellationToken);
 
-        return recipesToAdd.Count();
+        return recipesToAdd.Count;
     }
 }
