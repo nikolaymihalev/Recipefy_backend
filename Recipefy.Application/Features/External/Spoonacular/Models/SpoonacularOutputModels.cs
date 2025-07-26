@@ -176,3 +176,8 @@ public class Equipment
     [JsonPropertyName("localizedName")] public string LocalizedName { get; set; }
     [JsonPropertyName("image")] public string Image { get; set; }
 }
+
+public class GetRandorRecipesOutputModel 
+{
+    public Recipe[] Recipes { get; set; }
+}
