@@ -1,8 +1,10 @@
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Recipefy.Application.Contracts.Repositories;
 using Recipefy.Application.Contracts.Services;
 using Recipefy.Domain.Constants;
 using Recipefy.Domain.Models.Entities;
+using Recipefy.Domain.Models.Enums;
 using CaloricBreakdown = Recipefy.Domain.Models.ValueObjects.CaloricBreakdown;
 using Recipe = Recipefy.Domain.Models.Entities.Recipe;
 using WeightPerServing = Recipefy.Domain.Models.ValueObjects.WeightPerServing;
@@ -20,12 +22,19 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
     private readonly ISpoonacularService _spoonacularService;
     private readonly IRecipeRepository _recipeRepository;
 
+    private readonly string _baseImgUrl;
+    
+    private const int IngredientImageSize = 100;    
+    
     public AddRandomRecipesCommandHandler(
         ISpoonacularService spoonacularService,
-        IRecipeRepository recipeRepository)
+        IRecipeRepository recipeRepository,
+        IConfiguration configuration)
     {
         _spoonacularService = spoonacularService;
         _recipeRepository = recipeRepository;
+
+        _baseImgUrl = configuration["Spoonacular:BaseImageUrl"];
     }
     
     public async Task<int> Handle(AddRandomRecipesCommand request, CancellationToken cancellationToken)
@@ -82,6 +91,22 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
                         Amount = n.Amount,
                         Unit = n.Unit,
                         PercentOfDailyNeeds = n.PercentOfDailyNeeds
+                    }).ToList(),
+                RecipeIngredients = x.ExtendedIngredients
+                    .Select(i => new RecipeIngredient()
+                    {
+                        Amount = i.Amount,
+                        Unit = i.Unit,
+                        Ingredient = new Ingredient()
+                        {
+                            ExternalId = i.Id,
+                            ImageUrl =
+                                $"{_baseImgUrl}/ingredients_{IngredientImageSize}x{IngredientImageSize}/{i.Image}",
+                            Name = i.Original,
+                            Consistency = Enum.TryParse<IngredientConsistency>(i.Consistency, true, out var result)
+                                ? result
+                                : IngredientConsistency.NotSet
+                        }
                     }).ToList()
             })
             .ToList();
