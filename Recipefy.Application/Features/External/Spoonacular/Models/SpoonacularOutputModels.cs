@@ -25,24 +25,21 @@ public class Recipe
     [JsonPropertyName("sustainable")] public bool Sustainable { get; set; }
     [JsonPropertyName("lowFodmap")] public bool LowFodmap { get; set; }
 
-    [JsonPropertyName("weightWatcherSmartPoints")]
-    public int WeightWatcherSmartPoints { get; set; }
+    [JsonPropertyName("weightWatcherSmartPoints")] public int WeightWatcherSmartPoints { get; set; }
 
     [JsonPropertyName("gaps")] public string Gaps { get; set; }
 
-    [JsonPropertyName("preparationMinutes")]
-    public int? PreparationMinutes { get; set; }
+    [JsonPropertyName("preparationMinutes")] public int? PreparationMinutes { get; set; }
 
     [JsonPropertyName("cookingMinutes")] public int? CookingMinutes { get; set; }
     [JsonPropertyName("aggregateLikes")] public int AggregateLikes { get; set; }
-    [JsonPropertyName("healthScore")] public int HealthScore { get; set; }
+    [JsonPropertyName("healthScore")] public double HealthScore { get; set; }
     [JsonPropertyName("creditsText")] public string CreditsText { get; set; }
     [JsonPropertyName("license")] public string License { get; set; }
     [JsonPropertyName("sourceName")] public string SourceName { get; set; }
     [JsonPropertyName("pricePerServing")] public double PricePerServing { get; set; }
 
-    [JsonPropertyName("extendedIngredients")]
-    public List<ExtendedIngredient> ExtendedIngredients { get; set; }
+    [JsonPropertyName("extendedIngredients")] public List<ExtendedIngredient> ExtendedIngredients { get; set; }
 
     [JsonPropertyName("nutrition")] public Nutrition Nutrition { get; set; }
     [JsonPropertyName("summary")] public string Summary { get; set; }
@@ -52,14 +49,12 @@ public class Recipe
     [JsonPropertyName("occasions")] public List<string> Occasions { get; set; }
     [JsonPropertyName("instructions")] public string Instructions { get; set; }
 
-    [JsonPropertyName("analyzedInstructions")]
-    public List<AnalyzedInstruction> AnalyzedInstructions { get; set; }
+    [JsonPropertyName("analyzedInstructions")] public List<AnalyzedInstruction> AnalyzedInstructions { get; set; }
 
     [JsonPropertyName("originalId")] public object OriginalId { get; set; }
     [JsonPropertyName("spoonacularScore")] public double SpoonacularScore { get; set; }
 
-    [JsonPropertyName("spoonacularSourceUrl")]
-    public string SpoonacularSourceUrl { get; set; }
+    [JsonPropertyName("spoonacularSourceUrl")] public string SpoonacularSourceUrl { get; set; }
 }
 
 public class ExtendedIngredient
@@ -107,8 +102,7 @@ public class Nutrient
     [JsonPropertyName("amount")] public double Amount { get; set; }
     [JsonPropertyName("unit")] public string Unit { get; set; }
 
-    [JsonPropertyName("percentOfDailyNeeds")]
-    public double? PercentOfDailyNeeds { get; set; }
+    [JsonPropertyName("percentOfDailyNeeds")] public double? PercentOfDailyNeeds { get; set; }
 }
 
 public class Property

@@ -41,7 +41,7 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
     {
         var recipesResponse = await _spoonacularRequester.GetRandormRecipesAsync(request.Number, request.IncludeNutrion, cancellationToken);
 
-        if (recipesResponse is null || recipesResponse.Recipes.Length is 0)
+        if (recipesResponse is null || recipesResponse?.Recipes is null || recipesResponse.Recipes.Length is 0)
             return 0;
         
         var recipesExternalIdsDb = await _recipeRepository.GetAllRecipesExternalIds(cancellationToken);
@@ -65,7 +65,7 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
                 IsGlutenFree = x.GlutenFree,
                 IsPopular = x.VeryPopular,
                 WeightWatherSmartPoints = x.WeightWatcherSmartPoints,
-                HealthScore = x.HealthScore,
+                HealthScore = (int)x.HealthScore,
                 Likes = x.AggregateLikes,
                 PricePerServing = (decimal)x.PricePerServing,
                 Description = x.Summary,
@@ -111,7 +111,9 @@ public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCo
             .ToList();
 
         await _recipeRepository.AddRangeAsync(recipesToAdd, cancellationToken);
-
+        
+        await _recipeRepository.SaveChangesAsync();
+        
         return recipesToAdd.Count;
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Recipefy.Domain.Models.Entities;
@@ -5,7 +6,7 @@ using Recipefy.Infrastructure.Persistence.Configurations;
 
 namespace Recipefy.Infrastructure.Persistence;
 
-public class ApplicationDbContext : IdentityDbContext
+public class ApplicationDbContext : IdentityDbContext<IdentityUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
     {
