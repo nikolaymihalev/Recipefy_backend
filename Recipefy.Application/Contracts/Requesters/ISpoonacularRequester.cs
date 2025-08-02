@@ -1,9 +1,9 @@
 using Recipefy.Application.Contracts.Common;
 using Recipefy.Application.Features.External.Spoonacular.Models;
 
-namespace Recipefy.Application.Contracts.Services;
+namespace Recipefy.Application.Contracts.Requesters;
 
-public interface ISpoonacularService : IScopedService
+public interface ISpoonacularRequester : IScopedService
 {
     Task<GetRandorRecipesOutputModel?> GetRandormRecipesAsync(int? number = 100, bool? includeNutrion = true, CancellationToken token = default);
 }

@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Recipefy.Application.Contracts.Repositories;
-using Recipefy.Application.Contracts.Services;
+using Recipefy.Application.Contracts.Requesters;
 using Recipefy.Domain.Constants;
 using Recipefy.Domain.Models.Entities;
 using Recipefy.Domain.Models.Enums;
@@ -19,30 +19,29 @@ public class AddRandomRecipesCommand : IRequest<int>
 
 public class AddRandomRecipesCommandHandler : IRequestHandler<AddRandomRecipesCommand, int>
 {
-    private readonly ISpoonacularService _spoonacularService;
     private readonly IRecipeRepository _recipeRepository;
+    private readonly ISpoonacularRequester _spoonacularRequester;
 
     private readonly string _baseImgUrl;
     
     private const int IngredientImageSize = 100;    
     
     public AddRandomRecipesCommandHandler(
-        ISpoonacularService spoonacularService,
         IRecipeRepository recipeRepository,
+        ISpoonacularRequester spoonacularRequester,
         IConfiguration configuration)
     {
-        _spoonacularService = spoonacularService;
         _recipeRepository = recipeRepository;
+        _spoonacularRequester = spoonacularRequester;
 
         _baseImgUrl = configuration["Spoonacular:BaseImageUrl"];
     }
     
     public async Task<int> Handle(AddRandomRecipesCommand request, CancellationToken cancellationToken)
     {
-        var recipesResponse = await _spoonacularService.GetRandormRecipesAsync(request.Number, request.IncludeNutrion, cancellationToken);
+        var recipesResponse = await _spoonacularRequester.GetRandormRecipesAsync(request.Number, request.IncludeNutrion, cancellationToken);
 
-        if (recipesResponse is null
-            || recipesResponse.Recipes.Length is 0)
+        if (recipesResponse is null || recipesResponse.Recipes.Length is 0)
             return 0;
         
         var recipesExternalIdsDb = await _recipeRepository.GetAllRecipesExternalIds(cancellationToken);
