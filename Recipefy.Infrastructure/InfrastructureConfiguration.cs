@@ -1,4 +1,5 @@
 using System.Reflection;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class InfrastructureConfiguration
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         return AddDbContext(services,configuration)
+            .AddIdentity()
             .AddRepositories()
             .AddServices();
     }
@@ -62,6 +64,15 @@ public static class InfrastructureConfiguration
             .WithScopedLifetime()
         );
         
+        return services;
+    }
+
+    private static IServiceCollection AddIdentity(this IServiceCollection services)
+    {
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
         return services;
     }
 }

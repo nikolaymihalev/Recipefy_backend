@@ -29,6 +29,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, object>
         UserManager<IdentityUser> userManager)
     {
         _userManager = userManager;
+        _jwtSettings = new();
         configuration.GetSection(JwtKey).Bind(_jwtSettings);
     }
     
@@ -40,7 +41,7 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, object>
             throw new ApplicationException($"User with email {request.Email} does not exist");
         
         if(await _userManager.CheckPasswordAsync(user, request.Password) == false)
-            return new UnauthorizedAccessException("Invalid credentials");
+            throw new UnauthorizedAccessException("Invalid credentials");
         
         var creds = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key)), SecurityAlgorithms.HmacSha256);
 

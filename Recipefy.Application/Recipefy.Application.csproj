@@ -23,6 +23,7 @@
 
     <ItemGroup>
       <Folder Include="Contracts\Services\" />
+      <Folder Include="Features\Common\Admin\" />
       <Folder Include="Features\Common\Identity\Queries\" />
     </ItemGroup>
 

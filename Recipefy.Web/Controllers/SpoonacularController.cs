@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Recipefy.Application.Features.External.Spoonacular.Commands.AddRandomRecipes;
 
