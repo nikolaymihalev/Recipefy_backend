@@ -8,16 +8,12 @@ namespace Recipefy.Application.Requesters;
 
 public class BaseRequester : IBaseRequester
 {
-    private readonly HttpClient _httpClient;
+    protected readonly HttpClient _httpClient;
     
     public BaseRequester()
     {
-        _httpClient = new HttpClient()
-        {
-            BaseAddress = new Uri(this.BaseUrl)
-        };
+        _httpClient = new HttpClient();
     }
-    public string BaseUrl { get; protected set; }
 
     public async Task<T?> GetAsync<T>(string url, CancellationToken cancellationToken = default) =>
         await SendAsync<T>(url, null, HttpRequestType.Get, cancellationToken).ConfigureAwait(false);

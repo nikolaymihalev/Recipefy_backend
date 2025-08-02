@@ -12,7 +12,7 @@ public class SpoonacularRequester : BaseRequester, ISpoonacularRequester
     
     public SpoonacularRequester(IConfiguration configuration)
     {
-        base.BaseUrl = configuration["Spoonacular:BaseUrl"];
+        base._httpClient.BaseAddress = new(configuration["Spoonacular:BaseUrl"]);
         _apiKey = configuration["Spoonacular:ApiKey"];
     }
     
@@ -22,9 +22,9 @@ public class SpoonacularRequester : BaseRequester, ISpoonacularRequester
         
         var endpoint = "/recipes/random";
         
-        number = number > MaxRecipesCount ? MaxRecipesCount : number;
+        number = (number ?? 0) > MaxRecipesCount ? MaxRecipesCount : (number ?? MaxRecipesCount);
         
-        var query = $"number={number}&includeNutrition={includeNutrion}";
+        var query = $"number={number}&includeNutrition={includeNutrion ?? true}";
 
         return await base.GetAsync<GetRandorRecipesOutputModel>(SpoonacularHelper.GetUrl(endpoint, query, _apiKey), token);
     }
