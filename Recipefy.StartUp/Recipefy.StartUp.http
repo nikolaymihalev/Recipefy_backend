@@ -1,4 +1,4 @@
-@Recipefy.StartUp_HostAddress = http://localhost:5124
+@Recipefy.StartUp_HostAddress = http://0.0.0.0:5124
 
 GET {{Recipefy.StartUp_HostAddress}}/weatherforecast/
 Accept: application/json
