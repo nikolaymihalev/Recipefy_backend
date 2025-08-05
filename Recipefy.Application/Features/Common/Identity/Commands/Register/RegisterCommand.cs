@@ -9,6 +9,7 @@ public class RegisterCommand : IRequest<object>
     public string Username { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
+    public string ConfirmPassword { get; set; }
 }
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, object>
@@ -29,6 +30,9 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, object>
         if(result.Succeeded is false)
             return new InvalidOperationException(result.Errors.ToString());
 
+        if(request.Password != request.ConfirmPassword)
+            return new InvalidOperationException("Passwords don't match");
+        
         return new
         {
             Message = "User successfully created"
@@ -49,6 +53,11 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .NotNull()
             .NotEmpty()
             .WithMessage("Password is required");
+        
+        RuleFor(x => x.ConfirmPassword)
+            .NotNull()
+            .NotEmpty()
+            .WithMessage("Confirm Password is required");
         
         RuleFor(x => x.Username)
             .NotNull()
