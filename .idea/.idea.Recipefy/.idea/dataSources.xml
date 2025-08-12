@@ -9,5 +9,12 @@
       <jdbc-url>Server=localhost,1433;Database=RecipefyDb;User Id=sa;Password=YourStrong@Passw0rd;MultipleActiveResultSets=true;Encrypt=false</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="RecipefyDb" uuid="6ac3e276-a0ae-4067-ba9c-4e57bc2504b1">
+      <driver-ref>sqlserver.jb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.jetbrains.jdbc.sqlserver.SqlServerDriver</jdbc-driver>
+      <jdbc-url>Server=recipefy-server-001.database.windows.net\RecipefyDb,1433;Database=RecipefyDb</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
